@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>InsightChatbot</title>
+    <title>InsightsBot</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,18 +11,39 @@
   </head>
 
   <body>
-    <% if notice.present? %>
-      <div class="alert alert-success alert-dismissible fade show m-2" role="alert">
-        <%= notice %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <% if user_signed_in? %>
+      <div class="app-layout">
+        <%= render "shared/sidebar" %>
+        <main class="app-main">
+          <% if notice.present? %>
+            <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+              <%= notice %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          <% end %>
+          <% if alert.present? %>
+            <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+              <%= alert %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          <% end %>
+          <%= yield %>
+        </main>
       </div>
+    <% else %>
+      <% if notice.present? %>
+        <div class="alert alert-success alert-dismissible fade show m-2" role="alert">
+          <%= notice %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
+          <%= alert %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
+      <%= yield %>
     <% end %>
-    <% if alert.present? %>
-      <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
-        <%= alert %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
-    <% end %>
-    <%= yield %>
   </body>
 </html>

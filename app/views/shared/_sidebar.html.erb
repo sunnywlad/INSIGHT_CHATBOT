@@ -1,0 +1,40 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-logo">IB</span>
+    <span class="sidebar-brand">InsightsBot</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <%= link_to chats_path, class: "sidebar-link #{current_page?(chats_path) ? 'active' : ''}" do %>
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    <% end %>
+
+    <div class="sidebar-section-title">Projects</div>
+
+    <% if current_user.chats.any? %>
+      <% current_user.chats.order(created_at: :desc).limit(10).each do |chat| %>
+        <%= link_to chat_path(chat), class: "sidebar-link sidebar-chat-link #{current_page?(chat_path(chat)) ? 'active' : ''}" do %>
+          <i class="fa-regular fa-comment"></i>
+          <span><%= truncate(chat.title, length: 28) %></span>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= link_to new_chat_path, class: "sidebar-new-btn" do %>
+      <i class="fa-solid fa-plus"></i>
+      <span>New analysis</span>
+    <% end %>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <i class="fa-regular fa-user"></i>
+      <span><%= current_user.email %></span>
+    </div>
+    <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "sidebar-link sidebar-logout" do %>
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Sign out</span>
+    <% end %>
+  </div>
+</aside>
