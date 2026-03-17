@@ -5,25 +5,24 @@
   </div>
 
   <nav class="sidebar-nav">
-    <%= link_to chats_path, class: "sidebar-link #{current_page?(chats_path) ? 'active' : ''}" do %>
+    <%= link_to products_path, class: "sidebar-link #{current_page?(products_path) ? 'active' : ''}" do %>
       <i class="fa-solid fa-house"></i>
       <span>Home</span>
     <% end %>
 
-    <div class="sidebar-section-title">Projects</div>
+    <div class="sidebar-section-title">Products</div>
 
-    <% if current_user.chats.any? %>
-      <% current_user.chats.order(created_at: :desc).limit(10).each do |chat| %>
-        <%= link_to chat_path(chat), class: "sidebar-link sidebar-chat-link #{current_page?(chat_path(chat)) ? 'active' : ''}" do %>
-          <i class="fa-regular fa-comment"></i>
-          <span><%= truncate(chat.title, length: 28) %></span>
+    <% if !Product.all.nil? %>
+      <% Product.all.order(created_at: :desc).limit(10).each do |product| %>
+        <%= link_to product_path(product), class: "sidebar-link sidebar-product-link #{current_page?(product_path(product)) ? 'active' : ''}" do %>
+          <span><%= truncate(product.name, length: 28) %></span>
         <% end %>
       <% end %>
     <% end %>
 
-    <%= link_to new_chat_path, class: "sidebar-new-btn" do %>
+    <%= link_to new_product_path, class: "sidebar-new-btn" do %>
       <i class="fa-solid fa-plus"></i>
-      <span>New analysis</span>
+      <span>New product</span>
     <% end %>
   </nav>
 

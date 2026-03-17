@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   root to: "pages#home"
 
   resources :products, only: [:index, :new, :create, :show] do
-    resources chats, only: [:new, :create]
+    resources :chats, only: [:new, :create]
   end
 
   resources :chats, only: [:show] do

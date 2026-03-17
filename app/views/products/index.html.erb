@@ -1,0 +1,11 @@
+<h1>All products listed here :</h1>
+
+<ul>
+
+  <% @products.each do |product| %>
+    <li><%= product.name %> <i>by</i> <%= product.brand%></li>
+  <% end %>
+
+</ul>
+
+<%= link_to "Add a product", new_product_path %>
