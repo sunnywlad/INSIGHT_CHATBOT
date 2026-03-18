@@ -42,7 +42,7 @@ class MessagesController < ApplicationController
   end
 
   def scrape_reddit
-    query = "#{@product.name} #{@product.brand}"
+    query = "#{@product.name} #{@product.brand} #{@message.content}"
     RedditScraper.new(query).call
   end
 
