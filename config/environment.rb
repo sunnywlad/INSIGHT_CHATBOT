@@ -3,6 +3,3 @@ require_relative "application"
 
 # Initialize the Rails application.
 Rails.application.initialize!
-
-#API Claude
-ANTHROPIC_API_KEY=""
