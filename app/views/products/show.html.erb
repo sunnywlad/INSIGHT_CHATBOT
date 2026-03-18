@@ -1,22 +1,29 @@
-<h1><%= @product.name %></h1>
-<p><i>By :</i> <%= @product.brand %></p>
+<div class="chat-show">
+  <div class="chats-index-header">
+    <nav class="breadcrumb">
+      <%= link_to "Home", products_path, class: "breadcrumb-item" %>
+      <span class="breadcrumb-item active"><%= @product.name %></span>
+    </nav>
+    <%= button_to "New chat", product_chats_path(@product), class: "btn-new" %>
+  </div>
 
-<h2>Chats</h2>
+  <div class="chat-show-body">
+    <h1 class="chat-show-title"><%= @product.name %> <span style="color: #888; font-weight: 400; font-size: 16px;">by <%= @product.brand %></span></h1>
 
-<div class="mb-4">
-  <% if @chats.any? %>
-    <ul>
-      <% @chats.each do |chat| %>
-        <li><%= link_to chat.title, chat_path(chat) %></li>
-      <% end %>
-    </ul>
-  <% else %>
-    There are no chats yet.
-  <% end %>
-  <%= button_to "New chat", product_chats_path(@product), class: "btn btn-primary" %>
+    <% if @chats.any? %>
+      <div class="suggestion-grid" style="max-width: 100%; padding: 0;">
+        <% @chats.each do |chat| %>
+          <%= link_to chat_path(chat), class: "suggestion-card" do %>
+            <div class="suggestion-icon">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+            <h3><%= chat.title %></h3>
+            <p><%= chat.messages.count %> messages &middot; <%= time_ago_in_words(chat.created_at) %> ago</p>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="chat-show-empty">No chats yet. Start a new conversation to analyze this product.</p>
+    <% end %>
+  </div>
 </div>
-
-
-
-
-<%= link_to "Back to products", products_path %>

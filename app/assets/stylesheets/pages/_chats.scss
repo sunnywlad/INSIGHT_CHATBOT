@@ -220,6 +220,8 @@
 
 .chat-show-body {
   padding: 40px 32px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .chat-show-title {
@@ -232,4 +234,109 @@
 .chat-show-empty {
   color: #aaa;
   font-size: 14px;
+}
+
+// ===== CHAT MESSAGES =====
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.chat-message {
+  display: flex;
+
+  &.chat-message-user {
+    justify-content: flex-end;
+
+    .chat-message-bubble {
+      background-color: #1a1a1a;
+      color: #fff;
+      border-radius: 16px 16px 4px 16px;
+      max-width: 70%;
+    }
+  }
+
+  &.chat-message-assistant {
+    justify-content: flex-start;
+
+    .chat-message-bubble {
+      background-color: #fff;
+      color: #1a1a1a;
+      border: 1px solid #e8e8e8;
+      border-radius: 16px 16px 16px 4px;
+      max-width: 85%;
+    }
+  }
+}
+
+.chat-message-bubble {
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+
+  p {
+    margin: 0 0 8px;
+    &:last-child { margin: 0; }
+  }
+}
+
+// ===== CHAT INPUT =====
+.chat-input-container {
+  position: sticky;
+  bottom: 0;
+  background-color: #f0f0f0;
+  padding: 16px 0;
+}
+
+.chat-input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 12px 12px 12px 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus-within {
+    border-color: #ccc;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .form-group { flex: 1; margin: 0; }
+}
+
+.chat-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a1a;
+  background: transparent;
+  resize: none;
+  padding: 0;
+  line-height: 1.5;
+
+  &::placeholder { color: #bbb; }
+}
+
+.chat-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1a1a1a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+
+  &:hover { background-color: #333; }
+
+  i { font-size: 14px; }
 }

@@ -1,9 +1,26 @@
-<h1>New Product : </h1>
+<div class="chats-new">
+  <div class="chats-index-header">
+    <nav class="breadcrumb">
+      <%= link_to "Home", products_path, class: "breadcrumb-item" %>
+      <span class="breadcrumb-item active">New product</span>
+    </nav>
+  </div>
 
-<%= simple_form_for @product do |f| %>
-  <%= f.input :name %>
-  <%= f.input :brand %>
-  <%= f.button :submit %>
-<% end %>
+  <div class="chats-hero">
+    <h1>Add a new product to analyze</h1>
 
-<%= link_to "Back to products", products_path %>
+    <div class="hero-form-card">
+      <%= simple_form_for @product do |f| %>
+        <div class="form-group">
+          <%= f.input :name, input_html: { class: "hero-form-input", placeholder: "Product name..." }, label: false %>
+        </div>
+        <div class="form-group">
+          <%= f.input :brand, input_html: { class: "hero-form-input", placeholder: "Brand name..." }, label: false %>
+        </div>
+        <div class="hero-form-footer">
+          <%= f.submit "Create product", class: "hero-ask-btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

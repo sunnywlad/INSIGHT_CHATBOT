@@ -1,11 +1,40 @@
-<h1>All products listed here :</h1>
+<div class="chats-index">
+  <div class="chats-index-header">
+    <nav class="breadcrumb">
+      <span class="breadcrumb-item active">Home</span>
+    </nav>
+    <%= link_to new_product_path, class: "btn-new" do %>
+      <i class="fa-solid fa-plus"></i> New product
+    <% end %>
+  </div>
 
-<ul>
+  <div class="chats-hero">
+    <h1>What are you making sense of today?</h1>
 
-  <% @products.each do |product| %>
-    <li><%= link_to product.name, product_path(product) %> <i>by</i> <%= product.brand%></li>
+    <%= link_to new_product_path, class: "hero-input-card" do %>
+      <div class="hero-input-placeholder">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Add a product to analyze...</span>
+      </div>
+      <div class="hero-input-footer">
+        <span class="hero-ask-btn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @products.any? %>
+    <div class="suggestion-grid">
+      <% @products.each do |product| %>
+        <%= link_to product_path(product), class: "suggestion-card" do %>
+          <div class="suggestion-icon">
+            <i class="fa-solid fa-box"></i>
+          </div>
+          <h3><%= product.name %></h3>
+          <p><%= product.brand %></p>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
-
-</ul>
-
-<%= link_to "Add a product", new_product_path %>
+</div>
