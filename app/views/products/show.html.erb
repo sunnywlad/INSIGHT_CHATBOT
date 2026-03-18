@@ -1,0 +1,22 @@
+<h1><%= @product.name %></h1>
+<p><i>By :</i> <%= @product.brand %></p>
+
+<h2>Chats</h2>
+
+<div class="mb-4">
+  <% if @chats.any? %>
+    <ul>
+      <% @chats.each do |chat| %>
+        <li><%= link_to chat.title, chat_path(chat) %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    There are no chats yet.
+  <% end %>
+  <%= button_to "New chat", product_chats_path(@product), class: "btn btn-primary" %>
+</div>
+
+
+
+
+<%= link_to "Back to products", products_path %>
