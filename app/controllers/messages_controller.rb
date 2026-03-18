@@ -1,8 +1,18 @@
 class MessagesController < ApplicationController
-  SYSTEM_PROMPT = "You are a senior product manager.\n\nI am a junior product manager learning about understanding user needs.\n\nHelp me by summarizing the posts you find on social media.\n\nAnswer clearly."
-  def new
-    @message = Message.new
-  end
+  SYSTEM_PROMPT = <<~PROMPT
+    You are a senior consumer insights analyst.
+
+    Your job is to analyze real social media posts and extract actionable insights for product teams.
+
+    When given social media data, you must:
+    - Summarize the overall sentiment (positive, negative, mixed)
+    - Identify key themes and recurring opinions
+    - Highlight notable quotes or posts
+    - Give a clear, concise answer to the user's question
+
+    Always base your analysis on the provided social media data. If no data is available, say so clearly.
+    Answer in the same language as the user's question.
+  PROMPT
 
   def create
     @chat = current_user.chats.find(params[:chat_id])
@@ -11,10 +21,12 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     @message.chat = @chat
     @message.role = "user"
+
     if @message.save
+      reddit_posts = scrape_reddit
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
-      response = @ruby_llm_chat.with_instructions(instructions).ask(@message.content)
+      response = @ruby_llm_chat.with_instructions(instructions(reddit_posts)).ask(@message.content)
       @chat.messages.create(role: "assistant", content: response.content)
       @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
@@ -29,12 +41,28 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:content)
   end
 
-  def product_context
-    "Here is the context of the product: name : #{@product.name}, brand: #{@product.brand}"
+  def scrape_reddit
+    query = "#{@product.name} #{@product.brand}"
+    RedditScraper.new(query).call
   end
 
-  def instructions
-    [SYSTEM_PROMPT, product_context].compact.join("\n\n")
+  def format_reddit_data(posts)
+    return "No social media data found for this query." if posts.empty?
+
+    formatted = posts.map.with_index(1) do |post, i|
+      text = post[:body].present? ? "\n   #{post[:body]}" : ""
+      "#{i}. [r/#{post[:subreddit]}] #{post[:title]} (score: #{post[:score]}, #{post[:num_comments]} comments)#{text}"
+    end
+
+    "Here are #{posts.size} Reddit posts about #{@product.name} by #{@product.brand}:\n\n#{formatted.join("\n\n")}"
+  end
+
+  def product_context
+    "Product context: #{@product.name} by #{@product.brand}"
+  end
+
+  def instructions(reddit_posts)
+    [SYSTEM_PROMPT, product_context, format_reddit_data(reddit_posts)].join("\n\n---\n\n")
   end
 
   def build_conversation_history
