@@ -1,2 +1,16 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="landing">
+  <div class="landing-card">
+    <div class="landing-logo">
+      <span class="landing-logo-icon">IB</span>
+      <span class="landing-logo-text">InsightsBot</span>
+    </div>
+
+    <h1 class="landing-title">Understand what people really think</h1>
+    <p class="landing-subtitle">Ask a question, get real-time insights from social media conversations across Reddit, X, Instagram and TikTok.</p>
+
+    <div class="landing-ctas">
+      <%= link_to "Get started", new_user_registration_path, class: "landing-btn landing-btn-primary" %>
+      <%= link_to "Sign in", new_user_session_path, class: "landing-btn landing-btn-secondary" %>
+    </div>
+  </div>
+</div>
