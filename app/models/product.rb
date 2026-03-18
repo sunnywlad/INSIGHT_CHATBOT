@@ -1,3 +1,3 @@
 class Product < ApplicationRecord
-  has_many :products, dependent: :destroy
+  has_many :chats, dependent: :destroy
 end

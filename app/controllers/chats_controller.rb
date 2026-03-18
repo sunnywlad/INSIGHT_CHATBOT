@@ -1,28 +1,27 @@
 class ChatsController < ApplicationController
-  def index
-    @chats = current_user.chats.order(created_at: :desc)
-  end
 
   def new
     @chat = Chat.new
   end
 
   def create
-    @chat = current_user.chats.build(chat_params)
+    @product = Product.find(params[:product_id])
+
+    @chat = Chat.new(title: Chat::DEFAULT_TITLE)
+    @chat.product = @product
+    @chat.user = current_user
+
     if @chat.save
-      redirect_to @chat
+      redirect_to chat_path(@chat)
     else
-      render :new, status: :unprocessable_entity
+      @chats = @product.chats.where(user: current_user)
+      render "products/show"
     end
   end
 
   def show
     @chat = current_user.chats.find(params[:id])
+    @message = Message.new
   end
 
-  private
-
-  def chat_params
-    params.require(:chat).permit(:title)
-  end
 end

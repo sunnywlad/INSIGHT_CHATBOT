@@ -1,19 +1,28 @@
-<div class="chat-show">
-  <div class="chats-index-header">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <%= link_to chats_path do %>
-            <i class="fa-solid fa-house me-1"></i> Home
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active"><%= @chat.title %></li>
-      </ol>
-    </nav>
-  </div>
+<%= link_to "← #{@chat.product.name}", product_path(@chat.product) %>
 
-  <div class="chat-show-body">
-    <h2 class="chat-show-title"><%= @chat.title %></h2>
-    <p class="chat-show-empty">No messages yet. Start the conversation below.</p>
-  </div>
+<h1 id="chat_title"><%= @chat.title %></h1>
+
+<div id="messages">
+  <% @chat.messages.each do |message| %>
+    <% if message.role == "user" %>
+      <div class="d-flex justify-content-end mb-2">
+        <div class="bg-white px-3 pb-0 pt-3 rounded-pill">
+          <%= message.content %>
+        </div>
+      </div>
+    <% elsif message.role == "assistant" %>
+      <div class="d-flex justify-content-start mb-5">
+        <div class="px-3 pb-0 pt-3">
+          <%= message.content %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div id="new_message_container">
+  <%= simple_form_for [@chat, @message] do |f| %>
+    <%= f.input :content, label: "Ask a question", required: true, placeholder: "What do Gen Z users think about this product?" %>
+    <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary' %>
+  <% end %>
 </div>
