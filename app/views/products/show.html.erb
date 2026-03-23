@@ -1,17 +1,19 @@
 <div class="chat-show">
   <div class="chats-index-header">
     <nav class="breadcrumb">
-      <%= link_to "Home", products_path, class: "breadcrumb-item" %>
+      <%= link_to products_path, class: "breadcrumb-item" do %>
+        <i class="fa-solid fa-house"></i> Home
+      <% end %>
       <span class="breadcrumb-item active"><%= @product.name %></span>
     </nav>
     <%= button_to "New chat", product_chats_path(@product), class: "btn-new" %>
   </div>
 
   <div class="chat-show-body">
-    <h1 class="chat-show-title"><%= @product.name %> <span style="color: #888; font-weight: 400; font-size: 16px;">by <%= @product.brand %></span></h1>
+    <h1 class="chat-show-title"><%= @product.name %> <span style="color: #888; font-weight: 400; font-size: 20px;">by <%= @product.brand %></span></h1>
 
-    <% if @chats.any? %>
-      <div class="suggestion-grid" style="max-width: 100%; padding: 0;">
+    <div class="suggestion-grid" style="max-width: 100%; padding: 0;">
+      <% if @chats.any? %>
         <% @chats.each do |chat| %>
           <%= link_to chat_path(chat), class: "suggestion-card" do %>
             <div class="suggestion-icon">
@@ -21,9 +23,13 @@
             <p><%= chat.messages.count %> messages &middot; <%= time_ago_in_words(chat.created_at) %> ago</p>
           <% end %>
         <% end %>
-      </div>
-    <% else %>
-      <p class="chat-show-empty">No chats yet. Start a new conversation to analyze this product.</p>
-    <% end %>
+      <% end %>
+      <%= link_to product_chats_path(@product), class: "suggestion-card", data: { turbo_method: :post } do %>
+        <div class="suggestion-icon">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <h3>Start a new chat</h3>
+      <% end %>
+    </div>
   </div>
 </div>

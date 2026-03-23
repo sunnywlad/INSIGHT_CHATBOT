@@ -9,10 +9,11 @@
     background: none;
     padding: 0;
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     color: #888;
 
-    .breadcrumb-item a {
+    .breadcrumb-item a,
+    a.breadcrumb-item {
       color: #888;
       text-decoration: none;
       &:hover { color: #1a1a1a; }
@@ -156,14 +157,14 @@
   }
 
   h3 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #1a1a1a;
     margin-bottom: 4px;
   }
 
   p {
-    font-size: 13px;
+    font-size: 15px;
     color: #888;
     margin: 0;
     line-height: 1.4;
@@ -352,4 +353,47 @@
   &:hover { background-color: #333; }
 
   i { font-size: 14px; }
+}
+
+.sidebar-product-row {
+  display: flex;
+  align-items: center;
+
+  .sidebar-link {
+    flex: 1;
+  }
+
+  .btn-delete-product {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    &:hover { color: #e74c3c; }
+  }
+
+  &:hover .btn-delete-product {
+    opacity: 1;
+  }
+}
+
+.suggestion-card-wrapper {
+  position: relative;
+
+  .btn-delete-product {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0 4px;
+    font-size: 14px;
+
+    &:hover { color: #e74c3c; }
+  }
 }

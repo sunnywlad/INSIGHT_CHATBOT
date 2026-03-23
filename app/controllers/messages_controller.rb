@@ -26,7 +26,7 @@ class MessagesController < ApplicationController
 
     if @message.save
       # reddit_posts = scrape_reddit
-      @ruby_llm_chat = RubyLLM.chat
+      @ruby_llm_chat = RubyLLM.chat(model: "gpt-4o-mini")
       youtube_tool = YoutubeTool.new
       build_conversation_history
       response = @ruby_llm_chat.with_tools(youtube_tool).with_instructions(instructions).ask(@message.content)
@@ -43,22 +43,6 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:content)
   end
-
-  # def scrape_reddit
-  #   query = "#{@product.name} #{@product.brand} #{@message.content}"
-  #   RedditScraper.new(query).call
-  # end
-
-  # def format_reddit_data(posts)
-  #   return "No social media data found for this query." if posts.empty?
-
-  #   formatted = posts.map.with_index(1) do |post, i|
-  #     text = post[:body].present? ? "\n   #{post[:body]}" : ""
-  #     "#{i}. [r/#{post[:subreddit]}] #{post[:title]} (score: #{post[:score]}, #{post[:num_comments]} comments)#{text}"
-  #   end
-
-  #   "Here are #{posts.size} Reddit posts about #{@product.name} by #{@product.brand}:\n\n#{formatted.join("\n\n")}"
-  # end
 
   def product_context
     "Product context: Name is #{@product.name} by brand : #{@product.brand}"
