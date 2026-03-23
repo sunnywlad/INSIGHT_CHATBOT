@@ -4,18 +4,15 @@ class YoutubeScraperService
   def initialize(name:, brand:)
     @youtube_service = Google::Apis::YoutubeV3::YouTubeService.new
     @youtube_service.key = ENV['YOUTUBE_API_KEY']
-    @query = "#{name} #{brand} review"
+    @query = "#{name} #{brand}"
   end
 
   def call (max_videos = 3)
     video_ids = fetch_video_ids(max_videos)
 
     all_feedbacks = video_ids.map do |video_id|
-      {
-        video_id: video_id,
-        comments: fetch_comments(video_id)
-      }
-    end
+      fetch_comments(video_id)
+    end.compact
     all_feedbacks
   end
 
@@ -36,11 +33,11 @@ class YoutubeScraperService
       response = @youtube_service.list_comment_threads(
         'snippet',
         video_id: video_id,
-        max_results: 20,
+        max_results: 15,
         order: 'relevance'
       )
       response.items.map do |item|
-        raw_text = item.snippet.top_level_comment.snippet.text_display
+        raw_text = item.snippet.top_level_comment.snippet.text_original
         clean_comment(raw_text)
       end.compact_blank.select { |text| useful_comment?(text) }
     rescue Google::Apis::ClientError => e
@@ -69,7 +66,7 @@ class YoutubeScraperService
   def useful_comment?(text)
     return false if text.nil?
     words = text.split(/\s+/)
-    words.size > 10 && words.size < 450
+    words.size > 5 && words.size < 450
   end
 
 end

@@ -5,7 +5,10 @@ class YoutubeTool < RubyLLM::Tool
 
   def execute(name:, brand:)
     scraper = YoutubeScraperService.new(name: name, brand: brand)
-    scraper.call(3)
+    data = scraper.call(10).flatten
+    data = data.first(20)
+
+    puts "📤 DATA ENVOYÉE AU LLM : #{data.inspect}"
 
     data.to_json
   rescue StandardError => e

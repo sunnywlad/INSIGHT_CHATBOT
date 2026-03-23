@@ -10,10 +10,11 @@ class MessagesController < ApplicationController
     - Highlight notable quotes or posts
     - Give a clear, concise answer to the user's question
 
-    Answer in the same language as the user's question.
+    To answer, you HAVE to use the 'YoutubeTool' to fetch real user comments from Youtube videos related to the product. You will use these comments as the basis for your analysis and insights.
+    Always base your analysis on the provided social media data. If no data is available, say so clearly.
+    Answer in the same language as the user's question. Give clear bullet points and quote specific posts when relevant. Avoid generic statements.
   PROMPT
 
-    # Always base your analysis on the provided social media data. If no data is available, say so clearly.
 
   def create
     @chat = current_user.chats.find(params[:chat_id])
@@ -26,8 +27,9 @@ class MessagesController < ApplicationController
     if @message.save
       # reddit_posts = scrape_reddit
       @ruby_llm_chat = RubyLLM.chat
+      youtube_tool = YoutubeTool.new
       build_conversation_history
-      response = @ruby_llm_chat.with_instructions(instructions).ask(@message.content)
+      response = @ruby_llm_chat.with_tools(youtube_tool).with_instructions(instructions).ask(@message.content)
       @chat.messages.create(role: "assistant", content: response.content)
       @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
