@@ -9,10 +9,11 @@
     background: none;
     padding: 0;
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     color: #888;
 
-    .breadcrumb-item a {
+    .breadcrumb-item a,
+    a.breadcrumb-item {
       color: #888;
       text-decoration: none;
       &:hover { color: #1a1a1a; }
@@ -156,14 +157,14 @@
   }
 
   h3 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #1a1a1a;
     margin-bottom: 4px;
   }
 
   p {
-    font-size: 13px;
+    font-size: 15px;
     color: #888;
     margin: 0;
     line-height: 1.4;

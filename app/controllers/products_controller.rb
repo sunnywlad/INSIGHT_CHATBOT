@@ -9,6 +9,8 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
+    @product.name = @product.name.titleize.strip
+    @product.brand = @product.brand.upcase.strip
     if @product.save
       redirect_to products_path, notice: "Product created successfully.", status: :see_other
     else

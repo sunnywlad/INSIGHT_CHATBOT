@@ -10,7 +10,7 @@
       <span>Home</span>
     <% end %>
 
-    <div class="sidebar-section-title">Products</div>
+    <div class="sidebar-section-title">My products</div>
 
     <% if current_user.products.any? %>
       <% current_user.products.distinct.order(created_at: :desc).limit(10).each do |product| %>
