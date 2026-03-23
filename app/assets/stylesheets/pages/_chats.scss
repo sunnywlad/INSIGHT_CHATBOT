@@ -354,3 +354,46 @@
 
   i { font-size: 14px; }
 }
+
+.sidebar-product-row {
+  display: flex;
+  align-items: center;
+
+  .sidebar-link {
+    flex: 1;
+  }
+
+  .btn-delete-product {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    &:hover { color: #e74c3c; }
+  }
+
+  &:hover .btn-delete-product {
+    opacity: 1;
+  }
+}
+
+.suggestion-card-wrapper {
+  position: relative;
+
+  .btn-delete-product {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0 4px;
+    font-size: 14px;
+
+    &:hover { color: #e74c3c; }
+  }
+}
