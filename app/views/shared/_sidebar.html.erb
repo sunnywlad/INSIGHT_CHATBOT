@@ -12,8 +12,8 @@
 
     <div class="sidebar-section-title">Products</div>
 
-    <% if !Product.all.nil? %>
-      <% Product.all.order(created_at: :desc).limit(10).each do |product| %>
+    <% if current_user.products.any? %>
+      <% current_user.products.distinct.order(created_at: :desc).limit(10).each do |product| %>
         <%= link_to product_path(product), class: "sidebar-link sidebar-product-link #{current_page?(product_path(product)) ? 'active' : ''}" do %>
           <span><%= truncate(product.name, length: 28) %></span>
         <% end %>

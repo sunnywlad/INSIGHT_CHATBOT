@@ -79,6 +79,7 @@ test:
 #
 production:
   <<: *default
-  database: insight_chatbot_production
-  username: insight_chatbot
-  password: <%= ENV["INSIGHT_CHATBOT_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  # database: insight_chatbot_production
+  # username: insight_chatbot
+  # password: <%= ENV["INSIGHT_CHATBOT_DATABASE_PASSWORD"] %>

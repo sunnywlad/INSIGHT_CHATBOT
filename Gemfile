@@ -52,6 +52,8 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem "devise"
 gem "ruby_llm", "~> 1.2.0"
+gem "net-http"
+gem "google-apis-youtube_v3"
 
 group :development, :test do
   gem "dotenv-rails"
